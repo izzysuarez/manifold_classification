@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import './InputField.css';
 import schemeChecks from './SchemeChecks.js'; 
 
+// make an import statement that brings in the viz component
+import PolygonViz from './RegularPolygon';
+
 function InputField() {
   const [inputValue, setInputValue] = useState('');
-  const [displayValue, setDisplayValue] = useState('');
+  const [displayValue, setDisplayValue] = useState('hello');
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -12,7 +15,8 @@ function InputField() {
 
   const handleInputSubmit = (event) => {
     event.preventDefault();
-    if (checkInputValidity(inputValue)) {
+    // added a secondary condition that the input value is not blank.
+    if (checkInputValidity(inputValue) && inputValue!=="") {
       const inputArray = schemeChecks.convertStringToArray(inputValue)
       console.log(inputArray)
       console.log(schemeChecks.isProper(inputArray))
@@ -57,6 +61,8 @@ function InputField() {
         <input type="text" value={inputValue} onChange={handleInputChange} />
       </form>
       {displayValue && <h2>{displayValue}</h2>}
+      {displayValue && <PolygonViz />}
+
     </div>
   );
 }
